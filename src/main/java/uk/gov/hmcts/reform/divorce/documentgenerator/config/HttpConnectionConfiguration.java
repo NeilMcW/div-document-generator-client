@@ -1,9 +1,12 @@
 package uk.gov.hmcts.reform.divorce.documentgenerator.config;
 
+import static java.util.Arrays.asList;
+
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.google.common.collect.ImmutableList;
+
 import org.apache.http.HttpRequestInterceptor;
 import org.apache.http.HttpResponseInterceptor;
 import org.apache.http.client.config.RequestConfig;
@@ -23,10 +26,9 @@ import org.springframework.http.converter.ResourceHttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
+
 import uk.gov.hmcts.reform.logging.httpcomponents.OutboundRequestIdSettingInterceptor;
 import uk.gov.hmcts.reform.logging.httpcomponents.OutboundRequestLoggingInterceptor;
-
-import static java.util.Arrays.asList;
 
 @Configuration
 public class HttpConnectionConfiguration {
@@ -41,6 +43,9 @@ public class HttpConnectionConfiguration {
 
     @Autowired
     private MappingJackson2HttpMessageConverter jackson2HttpCoverter;
+
+    @Autowired
+    private HttpClientConfiguration httpClientConfiguration;
 
     @Value("${http.connect.timeout}")
     private int httpConnectTimeout;
@@ -81,6 +86,7 @@ public class HttpConnectionConfiguration {
                 .addInterceptorFirst((HttpRequestInterceptor) new OutboundRequestLoggingInterceptor())
                 .addInterceptorLast((HttpResponseInterceptor) new OutboundRequestLoggingInterceptor())
                 .setDefaultRequestConfig(config)
+                .setConnectionManager(httpClientConfiguration.createPoolingConnectionManager())
                 .build();
 
         return new HttpComponentsClientHttpRequestFactory(client);

@@ -32,6 +32,15 @@ public class HttpClientConfiguration {
 
     @Bean
     public HttpClient httpClient() {
+
+        return HttpClientBuilder
+            .create()
+            .setConnectionManager(createPoolingConnectionManager())
+            .build();
+    }
+
+    public PoolingHttpClientConnectionManager createPoolingConnectionManager() {
+        
         PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
   
         connectionManager.setMaxTotal(httpConnectPoolMaxTotal);
@@ -39,10 +48,7 @@ public class HttpClientConfiguration {
         connectionManager.setDefaultMaxPerRoute(httpConnectPoolMaxPerRoute);
         connectionManager.setValidateAfterInactivity(httpConnectionPoolValidateAfterInactivity);
 
-        return HttpClientBuilder
-            .create()
-            .setConnectionManager(connectionManager)
-            .build();
+        return connectionManager;
     }
 
 }
