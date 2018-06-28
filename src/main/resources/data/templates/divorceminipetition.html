@@ -482,7 +482,7 @@
 
 {% if claimFrom contains "respondent" and claimFrom contains "correspondent" %}
 <p class="response-text">
-    The applicant is also applying to the court to claim the costs of the divorce from the respondent and the co-respondent
+    The applicant is also applying to the court to claim the costs of the divorce from the respondent and the co-respondent.
 </p>
 
 {% elseif  claimFrom contains "correspondent" %}
@@ -507,21 +507,21 @@
 
 {% if financialOrderFor contains "petitioner" and financialOrderFor contains "children" %}
 <p class="response-text">
-    The applicant is applying to the court for financial orders about how any property, money, pensions or other assets which you each have should be shared, for themselves and your children.
+    The applicant is also applying to the court for financial orders for the applicant, and for the children of the applicant and the respondent.
 </p>
 {% elseif financialOrderFor contains "children" %}
 <p class="response-text">
-    The applicant is applying to the court for financial orders for their children.
+    The applicant is also applying to the court for financial orders for the children of the applicant and the respondent.
 </p>
 {% else %}
 <p class="response-text">
-    The applicant is applying to the court for financial orders about how any property, money, pensions or other assets which you each have should be shared.
+    The applicant is also applying to the court for financial orders for the applicant.
 </p>
 {% endif %}
 
 {% else %}
 <p class="response-text">
-    The applicant is not applying for a financial order.
+    The applicant has not applied for a financial order.
 </p>
 {% endif %}
 </p>
